@@ -12,4 +12,12 @@
  * Please maintain package and alphabetical order!
  */
 
+ //--> com/onsoft/glasscat/install/core
+export {AbstractInstallTask} from "./install/core/AbstractInstallTask";
+export {InstallTask} from "./install/core/InstallTask";
+//--> com/onsoft/glasscat/install/exceptions
+export {InstallTaskError} from "./install/exceptions/InstallTaskError";
+//--> com/onsoft/glasscat/install/logging
+export {InstallLogger} from "./install/logging/InstallLogger";
 //--> com/onsoft/glasscat/install
+export {InstallTaskRunner} from "./install/InstallTaskRunner";
