@@ -7,6 +7,4 @@
 
 declare module "jec-glasscat-install" {
 
-import { LoggerProxy, AbstractLoggerProxy } from "jec-commons";
-
 /*PLACEHOLDER*/}
