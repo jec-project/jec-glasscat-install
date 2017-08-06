@@ -15,9 +15,23 @@
 //   limitations under the License.
 
 import { TestSuite, Test, BeforeAll, TestSorters } from "jec-juta";
-import { expect } from "chai";
+import { LoggerProxy } from "jec-commons";
+import * as chai from "chai";
+import * as spies from "chai-spies";
 import { InstallTaskRunner } from "../../../../../src/com/onsoft/glasscat/install/InstallTaskRunner";
 import { InstallTaskError } from "../../../../../src/com/onsoft/glasscat/install/exceptions/InstallTaskError";
+import { InstallLogger } from "../../../../../src/com/onsoft/glasscat/install/logging/InstallLogger";
+import { InstallTask } from "../../../../../src/com/onsoft/glasscat/install/core/InstallTask";
+
+// utilities:
+import { FakeTask1 } from "../../../../../utils/test-utils/classes/FakeTask1";
+import { FakeTask2 } from "../../../../../utils/test-utils/classes/FakeTask2";
+import { FailTask } from "../../../../../utils/test-utils/classes/FailTask";
+
+
+// Chai declarations:
+const expect:any = chai.expect;
+chai.use(spies);
 
 @TestSuite({
   description: "Test the InstallTaskRunner class methods",
@@ -26,10 +40,16 @@ import { InstallTaskError } from "../../../../../src/com/onsoft/glasscat/install
 export class InstallTaskRunnerTest {
 
   public runner:InstallTaskRunner = null;
+  public task1:InstallTask = null;
+  public task2:InstallTask = null;
+  public errorTask:InstallTask = null;
 
   @BeforeAll()
   public initTest():void {
     this.runner = new InstallTaskRunner();
+    this.task1 = new FakeTask1();
+    this.task2 = new FakeTask2();
+    this.errorTask = new FailTask();
   }
 
   @Test({
@@ -50,4 +70,73 @@ export class InstallTaskRunnerTest {
     });
   }
   
+  @Test({
+    description: "should invoke the logger proxy when the process starts",
+    order: 2
+  })
+  public logStartTest():void {
+    let logger:LoggerProxy = InstallLogger.getInstance();
+    let spy:any = chai.spy.on(logger, "log");
+    this.runner.runTasks((errors:InstallTaskError[])=>{
+      expect(spy).to.have.been.called.with("running tasks:");
+    });
+  }
+  
+  @Test({
+    description: "should add the specified array of tasks to the task runner in reverse order",
+    order: 3
+  })
+  public addTasksTest():void {
+    let tasks:InstallTask[] = [ this.task1, this.task2 ];
+    this.runner.addTasks(tasks);
+    let result:InstallTask[] = this.runner.getTasks();
+    expect(result[0]).to.equal(this.task2);
+    expect(result[1]).to.equal(this.task1);
+  }
+  
+  @Test({
+    description: "should invoke the callback method with no errors",
+    order: 4
+  })
+  public runTasksTest():void {
+    this.runner.runTasks((errors:InstallTaskError[])=>{
+      expect(errors).to.have.a.lengthOf(0);
+    });
+  }
+  
+  @Test({
+    description: "should invoke the run() method for each task",
+    order: 5
+  })
+  public runTest():void {
+    let spy1:any = chai.spy.on(this.task1, "run");
+    let spy2:any = chai.spy.on(this.task2, "run");
+    this.runner.runTasks((errors:InstallTaskError[])=>{
+      expect(spy1).to.have.been.called.once;
+      expect(spy2).to.have.been.called.once;
+    });
+  }
+  
+  @Test({
+    description: "should add the new array of tasks to the task runner",
+    order: 6
+  })
+  public addAdditionalTasksTest():void {
+    let tasks:InstallTask[] = [ this.errorTask ];
+    this.runner.addTasks(tasks);
+    let result:InstallTask[] = this.runner.getTasks();
+    expect(result).to.contain(this.errorTask);
+    expect(result).to.contain(this.task1);
+    expect(result).to.contain(this.task2);
+  }
+  
+  @Test({
+    description: "should invoke the callback method with one error",
+    order: 7
+  })
+  public runTasksErrorTest():void {
+    this.runner.runTasks((errors:InstallTaskError[])=>{
+      expect(errors).to.have.a.lengthOf(1);
+    });
+  }
 }

@@ -19,5 +19,7 @@ export {InstallTask} from "./install/core/InstallTask";
 export {InstallTaskError} from "./install/exceptions/InstallTaskError";
 //--> com/onsoft/glasscat/install/logging
 export {InstallLogger} from "./install/logging/InstallLogger";
+//--> com/onsoft/glasscat/tasks
+export {BuildDirsTask} from "./install/tasks/BuildDirsTask";
 //--> com/onsoft/glasscat/install
 export {InstallTaskRunner} from "./install/InstallTaskRunner";

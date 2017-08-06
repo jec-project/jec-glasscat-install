@@ -38,7 +38,7 @@ export abstract class AbstractInstallTask implements InstallTask {
   /**
    * The properties associated with this task.
    */
-  private __properties:any = null;
+  protected __properties:any = null;
 
   //////////////////////////////////////////////////////////////////////////////
   // Public methods

@@ -22,17 +22,40 @@ import * as fs from "fs";
 /**
  * The task that is responsible for creating GlassCat repositories.
  */
-export class BuidDirsTask extends AbstractInstallTask implements InstallTask {
+export class BuildDirsTask extends AbstractInstallTask implements InstallTask {
 
   //////////////////////////////////////////////////////////////////////////////
   // Constructor function
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Creates a new <code>BuidDirsTask</code> instance.
+   * Creates a new <code>BuildDirsTask</code> instance.
    */
   constructor(){
     super();
+    this.initObj();
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Private methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Initializes this object.
+   */
+  private initObj():void {
+    this.__properties = {
+      directories: [
+        "public/cfg",
+        "public/domains",
+        "public/locales",
+        "public/logs",
+        "public/modules",
+        "public/wildcat",
+        "public",
+        "workspace"
+      ]
+    };
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -43,15 +66,26 @@ export class BuidDirsTask extends AbstractInstallTask implements InstallTask {
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let dir:string = "workspace";
-    try {
-      if(!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
+    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
+    let directories:string[] = this.__properties.directories;
+    let len:number = directories.length;
+    let dir:string = null;
+    let error:InstallTaskError = null;
+    while(len--) {
+      dir = directories[len];
+      try {
+        if(!fs.existsSync(dir)){
+          fs.mkdirSync(dir);
+        }
+      } catch(e) {
+        error = new InstallTaskError(
+          "An error occured while creating a directory: " + dir,
+          e
+        );
+        buildErrors.push(error);
       }
-      complete(null);
-    } catch(e){
-      //errors.push()
     }
+    complete(buildErrors);
   }
 }
 

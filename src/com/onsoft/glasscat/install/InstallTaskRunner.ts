@@ -65,10 +65,16 @@ export class InstallTaskRunner {
    */
   private runComplete(result:(errors:InstallTaskError[])=>void,
                                             errorList:InstallTaskError[]):void {
+    let len:number = errorList.length;
+    let error:InstallTaskError = null;
     let report:string = `running tasks complete:
 - number of tasks: ${this._tasks.length}
-- number of errors: ${errorList.length}
-`;
+- number of errors: ${len}`;
+    while(len--) {
+      error = errorList[len];
+      report += "\n=> error: " + error.getMessage()
+              + "\n   stack: " + error.getOriginalError();
+    }
     InstallLogger.getInstance().log(report);
     result(errorList);
   }
@@ -84,10 +90,9 @@ export class InstallTaskRunner {
    *                                  runner.
    */
   public addTasks(tasks:InstallTask[]):void {
-    let i:number = 0;
-    let len:number = tasks.length - 1;
-    for(; i <= len; ++i) {
-      this._tasks.push(tasks[i]);
+    let len:number = tasks.length;
+    while(len--) {
+      this._tasks.push(tasks[len]);
     }
   }
 
