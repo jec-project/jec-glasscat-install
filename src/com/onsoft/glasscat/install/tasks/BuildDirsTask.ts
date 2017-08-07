@@ -17,6 +17,7 @@
 import {InstallTask} from "../core/InstallTask";
 import {AbstractInstallTask} from "../core/AbstractInstallTask";
 import {InstallTaskError} from "../exceptions/InstallTaskError";
+import {BuildDirsTaskProps} from "../utils/BuildDirsTaskProps";
 import * as fs from "fs";
 
 /**
@@ -44,18 +45,7 @@ export class BuildDirsTask extends AbstractInstallTask implements InstallTask {
    * Initializes this object.
    */
   private initObj():void {
-    this.__properties = {
-      directories: [
-        "public/cfg",
-        "public/domains",
-        "public/locales",
-        "public/logs",
-        "public/modules",
-        "public/wildcat",
-        "public",
-        "workspace"
-      ]
-    };
+    this.__properties = new BuildDirsTaskProps();
   }
 
   //////////////////////////////////////////////////////////////////////////////

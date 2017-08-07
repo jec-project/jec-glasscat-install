@@ -14,13 +14,16 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-import { TestSuite, Test, TestSorters, BeforeAll, AfterAll } from "jec-juta";
+import { TestSuite, Test, TestSorters, BeforeAll, AfterAll, Async } from "jec-juta";
 import { expect } from "chai";
 import { SingletonError, LoggerProxy } from "jec-commons";
 import { BuildDirsTask } from "../../../../../../src/com/onsoft/glasscat/install/tasks/BuildDirsTask";
+import { InstallTaskError } from "../../../../../../src/com/onsoft/glasscat/install/exceptions/InstallTaskError";
+import * as fs from "fs";
 
 // utilities:
 import * as utils from "../../../../../../utils/test-utils/utilities/BuildDirsTaskTestUtils";
+
 
 @TestSuite({
   description: "Test the BuildDirsTask class methods",
@@ -90,5 +93,17 @@ export class BuildDirsTaskTest {
     expect(
       this.task.getProperties().directories
     ).to.equal(utils.NEW_DIRECTORIES);
+  }
+
+  @Test({
+    description: "should create the diectories specified in the properties object",
+    order: 4
+  })
+  public runTest(@Async done:Function):void {
+    this.task.run((errors:InstallTaskError[])=>{
+      expect(fs.existsSync(utils.PATH)).to.be.true;
+      expect(fs.existsSync(utils.PATH + "/inner-folder")).to.be.true;
+      done();
+    });
   }
 }

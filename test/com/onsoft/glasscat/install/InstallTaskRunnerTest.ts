@@ -14,7 +14,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-import { TestSuite, Test, BeforeAll, TestSorters } from "jec-juta";
+import { TestSuite, Test, BeforeAll, TestSorters, Async } from "jec-juta";
 import { LoggerProxy } from "jec-commons";
 import * as chai from "chai";
 import * as spies from "chai-spies";
@@ -98,9 +98,10 @@ export class InstallTaskRunnerTest {
     description: "should invoke the callback method with no errors",
     order: 4
   })
-  public runTasksTest():void {
+  public runTasksTest(@Async done:Function):void {
     this.runner.runTasks((errors:InstallTaskError[])=>{
       expect(errors).to.have.a.lengthOf(0);
+      done();
     });
   }
   
@@ -108,12 +109,13 @@ export class InstallTaskRunnerTest {
     description: "should invoke the run() method for each task",
     order: 5
   })
-  public runTest():void {
+  public runTest(@Async done:Function):void {
     let spy1:any = chai.spy.on(this.task1, "run");
     let spy2:any = chai.spy.on(this.task2, "run");
     this.runner.runTasks((errors:InstallTaskError[])=>{
       expect(spy1).to.have.been.called.once;
       expect(spy2).to.have.been.called.once;
+      done();
     });
   }
   
@@ -134,9 +136,10 @@ export class InstallTaskRunnerTest {
     description: "should invoke the callback method with one error",
     order: 7
   })
-  public runTasksErrorTest():void {
+  public runTasksErrorTest(@Async done:Function):void {
     this.runner.runTasks((errors:InstallTaskError[])=>{
       expect(errors).to.have.a.lengthOf(1);
+      done();
     });
   }
 }
