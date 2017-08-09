@@ -17,27 +17,26 @@
 import { TestSuite, Test, TestSorters, BeforeAll, AfterAll, Async } from "jec-juta";
 import { expect } from "chai";
 import { SingletonError, LoggerProxy } from "jec-commons";
-import { BuildDirsTask } from "../../../../../../src/com/onsoft/glasscat/install/tasks/BuildDirsTask";
+import { CopyConfigFilesTask } from "../../../../../../src/com/onsoft/glasscat/install/tasks/CopyConfigFilesTask";
 import { InstallTaskError } from "../../../../../../src/com/onsoft/glasscat/install/exceptions/InstallTaskError";
-import { BuildDirsTaskProps } from "../../../../../../src/com/onsoft/glasscat/install/utils/BuildDirsTaskProps";
+import { CopyConfigFilesTaskProps } from "../../../../../../src/com/onsoft/glasscat/install/utils/CopyConfigFilesTaskProps";
 import * as fs from "fs";
 
 // utilities:
-import * as utils from "../../../../../../utils/test-utils/utilities/BuildDirsTaskTestUtils";
-
+import * as utils from "../../../../../../utils/test-utils/utilities/CopyConfigFilesTaskTestUtils";
 
 @TestSuite({
-  description: "Test the BuildDirsTask class methods",
+  description: "Test the CopyConfigFilesTask class methods",
   testOrder: TestSorters.ORDER_ASCENDING
 })
-export class BuildDirsTaskTest {
+export class CopyConfigFilesTaskTest {
   
-  public task:BuildDirsTask = null;
+  public task:CopyConfigFilesTask = null;
 
   @BeforeAll()
   public initTest():void {
-    this.task = new BuildDirsTask();
     utils.deleteTestFolders();
+    this.task = new CopyConfigFilesTask();
   }
 
   @AfterAll()
@@ -47,45 +46,40 @@ export class BuildDirsTaskTest {
   }
 
   @Test({
-    description: "should return an instance of the BuildDirsTaskProps class",
+    description: "should return an instance of the CopyConfigFilesTaskProps class",
     order: 0
   })
   public getPropertiesTypeTest():void {
-    expect(this.task.getProperties()).to.be.an.instanceOf(BuildDirsTaskProps);
+    expect(
+      this.task.getProperties()
+    ).to.be.an.instanceOf(CopyConfigFilesTaskProps);
   }
   
   @Test({
-    description: "should return an object that contains a list of directories to create",
+    description: "should return a string that represents the path to the source directory to copy",
     order: 1
   })
   public getPropertiesDefaultTest():void {
     let props:any = this.task.getProperties();
-    expect(props.directories).to.be.an("array");
+    expect(props.src).to.be.a("string");
   }
-  
+   
   @Test({
-    description: "should return the correct list of directories to create",
+    description: "should return the correct path to the source directory to copy",
     order: 2
   })
-  public directoryListTest():void {
-    let dirs:string[] = this.task.getProperties().directories;
-    let dirsString:string = dirs.join();
-    dirs = utils.DIRECTORIES;
-    let len:number = dirs.length;
-    let dir:string = null;
-    while(len--) {
-      dir = dirs[len];
-      expect(dirsString).to.contain(dir);
-    }
+  public srcTest():void {
+    let props:any = this.task.getProperties();
+    expect(props.src).to.equal(utils.SRC);
   }
   
   @Test({
-    description: "should override the list of directories to create",
+    description: "should override the path to the source directory to copy",
     order: 3
   })
   public setPropertiesTest():void {
     let newProps:any = {
-      directories: utils.NEW_DIRECTORIES
+      src: utils.NEW_SRC
     };
     let doAddProps:Function = function():boolean {
       this.task.setProperties(newProps);
@@ -95,23 +89,22 @@ export class BuildDirsTaskTest {
   }
   
   @Test({
-    description: "should return the new list of directories to create",
+    description: "should return the new path to the source directory to copy",
     order: 4
   })
   public getPropertiesTest():void {
-    expect(
-      this.task.getProperties().directories
-    ).to.equal(utils.NEW_DIRECTORIES);
+    expect(this.task.getProperties().src).to.equal(utils.NEW_SRC);
   }
 
   @Test({
-    description: "should create the directories specified in the properties object",
+    description: "should copy the files from the path specified in the properties object to their destination",
     order: 5
   })
   public runTest(@Async done:Function):void {
+    utils.createTestFolders();
     this.task.run((errors:InstallTaskError[])=>{
-      expect(fs.existsSync(utils.PATH)).to.be.true;
-      expect(fs.existsSync(utils.PATH + "/inner-folder")).to.be.true;
+      expect(fs.existsSync(utils.PATH + "/file.json")).to.be.true;
+      expect(fs.existsSync(utils.PATH + "/file.xml")).to.be.true;
       done();
     });
   }
