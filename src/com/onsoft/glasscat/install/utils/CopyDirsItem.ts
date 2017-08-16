@@ -15,16 +15,16 @@
 //   limitations under the License.
 
 /**
- * An object that contains properties for the <code>BuildDirsTask</code> task.
+ * An DTO that contains information used to copy all files in a directory.
  */
-export class BuildDirsTaskProps {
+export class CopyDirsItem {
 
   //////////////////////////////////////////////////////////////////////////////
   // Constructor function
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Creates a new <code>BuildDirsTaskProps</code> instance.
+   * Creates a new <code>CopyDirsItem</code> instance.
    */
   constructor(){}
 
@@ -33,19 +33,13 @@ export class BuildDirsTaskProps {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * The list of folders to create.
+   * The reference to the source directory.
    */
-  public directories:string[] = [
-    "public/cfg/keyfiles",
-    "public/cfg",
-    "public/domains",
-    "public/locales",
-    "public/logs",
-    "public/modules",
-    "public/wildcat",
-    "public",
-    "workspace",
-    "typings"
-  ];
+  public src:string = null;
+  
+  /**
+   * The reference to the destination directory.
+   */
+  public dest:string = null;
 }
 

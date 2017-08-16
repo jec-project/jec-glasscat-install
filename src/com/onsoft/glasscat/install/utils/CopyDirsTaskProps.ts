@@ -14,17 +14,19 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
+import {CopyDirsItem} from "./CopyDirsItem";
+
 /**
- * An object that contains properties for the <code>BuildDirsTask</code> task.
+ * An object that contains properties for the <code>CopyDirsTask</code> task.
  */
-export class BuildDirsTaskProps {
+export class CopyDirsTaskProps {
 
   //////////////////////////////////////////////////////////////////////////////
   // Constructor function
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Creates a new <code>BuildDirsTaskProps</code> instance.
+   * Creates a new <code>CopyDirsTaskProps</code> instance.
    */
   constructor(){}
 
@@ -33,19 +35,9 @@ export class BuildDirsTaskProps {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * The list of folders to create.
+   * The list of <code>CopyDirsItem</code> objects that define the directories
+   * to copy.
    */
-  public directories:string[] = [
-    "public/cfg/keyfiles",
-    "public/cfg",
-    "public/domains",
-    "public/locales",
-    "public/logs",
-    "public/modules",
-    "public/wildcat",
-    "public",
-    "workspace",
-    "typings"
-  ];
+  public items:CopyDirsItem[] = null;
 }
 

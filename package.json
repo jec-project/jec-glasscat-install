@@ -2,7 +2,7 @@
   "name": "jec-glasscat-install",
   "version": "1.0.0",
   "description": "JEC GlassCat Install - The command-line user interface for the GlassCat Aplication Server.",
-  "main": "lib/com/onsoft/glasscat/index",
+  "main": "lib/com/onsoft/glasscat/jec-glasscat-install-index",
   "types": "types/jec-glasscat-install.d.ts",
   "scripts": {
     "test": "mocha juta/tiger/run-unit-tests"
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/pechemann/jec-glasscat-install#readme",
   "dependencies": {
-    "jec-commons": "^1.1.2"
+    "jec-commons": "^1.1.3"
   },
   "devDependencies": {
     "@types/fs-extra": "^4.0.0",
@@ -45,11 +45,10 @@
     "jec-tiger": "^1.1.3",
     "mocha": "^3.3.0",
     "typedoc": "^0.6.0",
-    "typescript": "^2.3.2",
-    "typings": "^2.1.1"
+    "typescript": "^2.4.2"
   },
-  "_peerDependencies": {
-    "jec-commons": "^1.1.2",
+  "peerDependencies": {
+    "jec-commons": "^1.1.3",
     "jec-juta": "^1.1.2",
     "jec-tiger": "^1.1.3"
   }

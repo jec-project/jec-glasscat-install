@@ -22,10 +22,15 @@ export {InstallLogger} from "./install/logging/InstallLogger";
 //--> com/onsoft/glasscat/install/tasks
 export {BuildDirsTask} from "./install/tasks/BuildDirsTask";
 export {CopyConfigFilesTask} from "./install/tasks/CopyConfigFilesTask";
+export {CopyDirsTask} from "./install/tasks/CopyDirsTask";
 //--> com/onsoft/glasscat/install/utils
 export {BuildDirsTaskProps} from "./install/utils/BuildDirsTaskProps";
 export {ConfigFilePathSolver} from "./install/utils/ConfigFilePathSolver";
 export {CopyConfigFilesTaskProps} from "./install/utils/CopyConfigFilesTaskProps";
+export {CopyDirsItem} from "./install/utils/CopyDirsItem";
+export {CopyDirsItemBuilder} from "./install/utils/CopyDirsItemBuilder";
+export {CopyDirsTaskProps} from "./install/utils/CopyDirsTaskProps";
+export {CopyDirsTaskPropsFactory} from "./install/utils/CopyDirsTaskPropsFactory";
 export {FilePath} from "./install/utils/FilePath";
 //--> com/onsoft/glasscat/install
 export {InstallTaskRunner} from "./install/InstallTaskRunner";

@@ -14,30 +14,26 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-import * as fse from "fs-extra";
+import { TestSuite, Test, BeforeAll } from "jec-juta";
+import { expect } from "chai";
+import { CopyDirsTaskProps } from "../../../../../../src/com/onsoft/glasscat/install/utils/CopyDirsTaskProps";
 
-/*!
- * This module constains utilities used by the BuildDirsTaskTest test suite.
- */
+@TestSuite({
+  description: "Test the CopyDirsTaskProps class properties"
+})
+export class CopyDirsTaskPropsTest {
+  
+  public props:CopyDirsTaskProps = null;
 
-// Utilities:
-export const PATH:string = process.cwd() + "/utils/temp";
-export const DIRECTORIES:string[] = [
-  "public/cfg/keyfiles",
-  "public/cfg",
-  "public/domains",
-  "public/locales",
-  "public/logs",
-  "public/modules",
-  "public/wildcat",
-  "public",
-  "workspace",
-  "typings"
-];
-export const NEW_DIRECTORIES:string[] = [
-  "utils/temp/inner-folder",
-  "utils/temp"
-];
-export const deleteTestFolders:Function = function(dir:string):void {
-  fse.removeSync(PATH);
-};
+  @BeforeAll()
+  public initTest():void {
+    this.props = new CopyDirsTaskProps();
+  }
+
+  @Test({
+    description: "should have a 'items' property set to 'null'"
+  })
+  public itemsTest():void {
+    expect(this.props).to.have.property("items", null);
+  }
+}

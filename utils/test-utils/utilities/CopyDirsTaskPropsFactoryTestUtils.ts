@@ -14,30 +14,16 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-import * as fse from "fs-extra";
+import {CopyDirsItemBuilder} from "../../../src/com/onsoft/glasscat/install/utils/CopyDirsItemBuilder";
+import {CopyDirsItem} from "../../../src/com/onsoft/glasscat/install/utils/CopyDirsItem";
 
 /*!
- * This module constains utilities used by the BuildDirsTaskTest test suite.
+ * This module constains utilities used by the CopyDirsTaskPropsFactory test
+ * suite.
  */
 
 // Utilities:
-export const PATH:string = process.cwd() + "/utils/temp";
-export const DIRECTORIES:string[] = [
-  "public/cfg/keyfiles",
-  "public/cfg",
-  "public/domains",
-  "public/locales",
-  "public/logs",
-  "public/modules",
-  "public/wildcat",
-  "public",
-  "workspace",
-  "typings"
-];
-export const NEW_DIRECTORIES:string[] = [
-  "utils/temp/inner-folder",
-  "utils/temp"
-];
-export const deleteTestFolders:Function = function(dir:string):void {
-  fse.removeSync(PATH);
-};
+const BUILDER:CopyDirsItemBuilder = new CopyDirsItemBuilder();
+export const DEFAULT_ITEMS_NUM:number = 2;
+export const ITEM_1:CopyDirsItem = BUILDER.build("/src/resources/locales", "/public/locales");
+export const ITEM_2:CopyDirsItem = BUILDER.build("/src/resources/security/keyfiles", "/public/cfg/keyfiles");

@@ -25,7 +25,6 @@ import * as fs from "fs";
 // utilities:
 import * as utils from "../../../../../../utils/test-utils/utilities/BuildDirsTaskTestUtils";
 
-
 @TestSuite({
   description: "Test the BuildDirsTask class methods",
   testOrder: TestSorters.ORDER_ASCENDING
