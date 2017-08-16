@@ -5,7 +5,8 @@
   "main": "lib/com/onsoft/glasscat/jec-glasscat-install-index",
   "types": "types/jec-glasscat-install.d.ts",
   "scripts": {
-    "test": "mocha juta/tiger/run-unit-tests"
+    "test": "mocha juta/tiger/run-unit-tests",
+    "postinstall": "grunt build"
   },
   "repository": {
     "type": "git",
