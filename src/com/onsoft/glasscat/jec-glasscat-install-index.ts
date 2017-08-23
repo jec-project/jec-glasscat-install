@@ -20,10 +20,12 @@ export {InstallTaskError} from "./install/exceptions/InstallTaskError";
 //--> com/onsoft/glasscat/install/logging
 export {InstallLogger} from "./install/logging/InstallLogger";
 //--> com/onsoft/glasscat/install/tasks
+export {BuildConsoleTask} from "./install/tasks/BuildConsoleTask";
 export {BuildDirsTask} from "./install/tasks/BuildDirsTask";
 export {CopyConfigFilesTask} from "./install/tasks/CopyConfigFilesTask";
 export {CopyDirsTask} from "./install/tasks/CopyDirsTask";
 //--> com/onsoft/glasscat/install/utils
+export {BuildConsoleTaskProps} from "./install/utils/BuildConsoleTaskProps";
 export {BuildDirsTaskProps} from "./install/utils/BuildDirsTaskProps";
 export {ConfigFilePathSolver} from "./install/utils/ConfigFilePathSolver";
 export {CopyConfigFilesTaskProps} from "./install/utils/CopyConfigFilesTaskProps";

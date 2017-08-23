@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.3"></a>
+## **1.0.3** (2017-08-22)
+
+### Bug Fixes
+
+### Features
+
+- **BuildConsoleTask**: adding the task that builds the admin console at the end of the install process
+
 <a name="jec-glasscat-install-1.0.2"></a>
 ## **1.0.2** (2017-08-20)
 
