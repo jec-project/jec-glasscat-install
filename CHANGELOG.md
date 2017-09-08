@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.4"></a>
+## **1.0.4** (2017-09-06)
+
+### Bug Fixes
+
+### Features
+
+- Dependencies upgrade
+
 <a name="jec-glasscat-install-1.0.3"></a>
 ## **1.0.3** (2017-08-22)
 
