@@ -24,6 +24,7 @@ export {BuildConsoleTask} from "./install/tasks/BuildConsoleTask";
 export {BuildDirsTask} from "./install/tasks/BuildDirsTask";
 export {CopyConfigFilesTask} from "./install/tasks/CopyConfigFilesTask";
 export {CopyDirsTask} from "./install/tasks/CopyDirsTask";
+export {InstallDefaultGpmTask} from "./install/tasks/InstallDefaultGpmTask";
 //--> com/onsoft/glasscat/install/utils
 export {BuildConsoleTaskProps} from "./install/utils/BuildConsoleTaskProps";
 export {BuildDirsTaskProps} from "./install/utils/BuildDirsTaskProps";
@@ -33,6 +34,10 @@ export {CopyDirsItem} from "./install/utils/CopyDirsItem";
 export {CopyDirsItemBuilder} from "./install/utils/CopyDirsItemBuilder";
 export {CopyDirsTaskProps} from "./install/utils/CopyDirsTaskProps";
 export {CopyDirsTaskPropsFactory} from "./install/utils/CopyDirsTaskPropsFactory";
+export {DefaultGpmPropsFactory} from "./install/utils/DefaultGpmPropsFactory";
 export {FilePath} from "./install/utils/FilePath";
+export {GpmRef} from "./install/utils/GpmRef";
+export {GpmRefParser} from "./install/utils/GpmRefParser";
+export {InstallDefaultGpmTaskProps} from "./install/utils/InstallDefaultGpmTaskProps";
 //--> com/onsoft/glasscat/install
 export {InstallTaskRunner} from "./install/InstallTaskRunner";

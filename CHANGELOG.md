@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.5"></a>
+## **1.0.5** (2017-11-05)
+
+### Bug Fixes
+
+### Features
+
+- **InstallDefaultGpmTask**: adding the task that downloads and installs the default GlassCat Project Models (GPMs)
+
 <a name="jec-glasscat-install-1.0.4"></a>
 ## **1.0.4** (2017-09-06)
 
