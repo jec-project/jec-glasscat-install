@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.6"></a>
+## **1.0.6** (2017-11-12)
+
+### Bug Fixes
+
+- Fixing missing property bug: setting `defaultGpmList` property of the `InstallDefaultGpmTaskProps` instance in the parsing process of the default GPM install task
+
+### Features
+
 <a name="jec-glasscat-install-1.0.5"></a>
 ## **1.0.5** (2017-11-05)
 

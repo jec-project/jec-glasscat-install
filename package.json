@@ -1,6 +1,6 @@
 {
   "name": "jec-glasscat-install",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "JEC GlassCat Install - The command-line user interface for the GlassCat Aplication Server.",
   "main": "dist/com/onsoft/glasscat/jec-glasscat-install-index",
   "types": "types/jec-glasscat-install.d.ts",

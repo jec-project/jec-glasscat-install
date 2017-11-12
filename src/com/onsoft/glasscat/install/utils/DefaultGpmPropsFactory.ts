@@ -94,9 +94,11 @@ export class DefaultGpmPropsFactory {
     let parser:GpmRefParser = new GpmRefParser();
     let defaultList:any[] = this._config.defaultGpmList;
     let len:number = defaultList.length;
+    let resultList:Array<GpmRef> = new Array<GpmRef>();
     while(len--) {
-      props.defaultGpmList.push(parser.parse(defaultList[len]));
+      resultList.push(parser.parse(defaultList[len]));
     }
+    props.defaultGpmList = resultList;
     return props;
   }
 
