@@ -1,5 +1,16 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.7"></a>
+## **1.0.7** (2017-11-12)
+
+### Bug Fixes
+
+- Asynchronous bug: fixing callback issues in the `CopyDirsTask` task
+- Setting the correct task name when logging the end of the `run()` function whithin the install task runner
+- Changing the install task runner implementation, from parallel to sequential, to prevent tasks dependencies errors
+
+### Features
+
 <a name="jec-glasscat-install-1.0.6"></a>
 ## **1.0.6** (2017-11-12)
 

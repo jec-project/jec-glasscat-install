@@ -43,28 +43,47 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
   }
 
   //////////////////////////////////////////////////////////////////////////////
+  // Private properties
+  //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * The cursor that indicates the task currently run in this installer.
+   */
+  private _cursor:number = -1;
+
+  /**
+   * A boollean that indicates whether this installer is processing tasks
+   * (<code>true</code>), or not (<code>false</code>).
+   */
+  private _isRunning:boolean = false;
+
+  /**
+   * The list of errors to pass as parameter of the callback method at the end
+   * of the installation process.
+   */
+  private _errors:InstallTaskError[] = null;
+  
+  //////////////////////////////////////////////////////////////////////////////
   // Private methods
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-   * Installs all default GPM specified in the GlassCat configuration file.
+   * Installs the next default GPM specified in the GlassCat configuration file.
    * 
-   * @param {Function} complete the callback method called when the install is
-   *                            complete.
+   * @param {Function} complete the callback method called when all
+   *                            installations are complete.
    */
-  private installGpms(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let error:InstallTaskError = null;
+  private installNextGpm(complete:(errors:InstallTaskError[])=>void):void {
     let builder:CheetohBuilder = new CheetohBuilder();
     let cheetoh:Cheetoh = builder.build();
     let gpmList:GpmRef[] = this.__properties.defaultGpmList;
     let gpmRef:GpmRef = null;
     let name:string = null;
-    let len:number = gpmList.length;
-    let cursor:number = len;
+    let error:InstallTaskError = null;
     let currentPath:string = process.cwd();
-    while(len--) {
-      gpmRef = gpmList[len];
+    this._cursor--;
+    if(this._cursor >= 0) {
+      gpmRef = gpmList[this._cursor];
       name = gpmRef.name;
       cheetoh.installGpmFromUri(
         `https://registry.npmjs.org/${name}/-/${name}-${gpmRef.version}.tgz`,
@@ -75,12 +94,17 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
               "An error occured while installing a default GPM",
               err
             );
-            buildErrors.push(error);
+            this._errors.push(error);
           }
-          cursor--;
-          if(cursor <= 0) complete(buildErrors);
+          this.installNextGpm(complete);
         }
       );
+    } else {
+      this._cursor = -1;
+      let resultErrors:InstallTaskError[] = this._errors.splice(0);
+      this._errors = null;
+      this._isRunning = false;
+      complete(resultErrors);
     }
   }
 
@@ -92,19 +116,35 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let factory:DefaultGpmPropsFactory = new DefaultGpmPropsFactory();
-    try {
-      this.__properties = factory.create();
-    } catch(e) {
-      buildErrors.push(e);
+    let factory:DefaultGpmPropsFactory = null;
+    if(this._isRunning) {
+      let errors:Array<InstallTaskError> = new Array<InstallTaskError>();
+      let msg:string = "Process is already running";
+      let error = new InstallTaskError(msg, new Error(msg));
+      errors.push(error);
+      complete(errors);
+    } else {
+      this._isRunning = true;
+      this._errors = new Array<InstallTaskError>();
+      factory = new DefaultGpmPropsFactory();
+      try {
+        this.__properties = factory.create();
+      } catch(e) {
+        this._errors.push(e);
+      }
+      this._cursor = this.__properties.defaultGpmList.length;
+      this.installNextGpm(complete);
     }
-    this.installGpms((errs:InstallTaskError[])=>{
-      errs.forEach(element => {
-        buildErrors.push(element);
-      });
-      complete(buildErrors);
-    })
+  }
+  
+  /**
+   * Returns a boollean that indicates whether this installer is processing 
+   * tasks (<code>true</code>), or not (<code>false</code>).
+   * 
+   * @return {boolean} <code>true</code> whether this installer is processing
+   *                   tasks; <code>false</code> otherwise.
+   */
+  public isRunning():boolean {
+    return this._isRunning;
   }
 }
-

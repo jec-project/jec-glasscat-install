@@ -66,9 +66,19 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
     this.__properties = factory.create();
   }
 
-  private copyFiles(item:CopyDirsItem, rootPath:string, pendingItemsNum:number,
-                              buildErrors:InstallTaskError[],
-                              complete:(errors:InstallTaskError[])=>void):void {
+  /**
+   * Copyes all elements, specified by their <code>CopyDirsItem</code> 
+   * descriptor to their final destination.
+   * 
+   * @param {CopyDirsItem} item the descriptor for the item to copy.
+   * @param {string} rootPath the root path of the server.
+   * @param {Array<InstallTaskError>} buildErrors the array of errors for the
+   *                                              current task.
+   * @param {Function} complete the callback method called at the end of the
+   *                            process.
+   */
+  private copyFiles(item:CopyDirsItem, rootPath:string, 
+                    buildErrors:InstallTaskError[], complete:Function):void {
     let srcPath:string = rootPath + item.src;
     let destPath:string = rootPath + item.dest;
     let data:string = null;
@@ -86,7 +96,7 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
             buildErrors.push(error);
           }
         });
-        if(--pendingItemsNum === 0) complete(buildErrors);
+        complete();
       });
   }
 
@@ -106,7 +116,10 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
     let pendingItemsNum:number = len;
     while(len--) {
       item = items[len];
-      this.copyFiles(item, rootPath, pendingItemsNum, buildErrors, complete);
+      this.copyFiles(item, rootPath, buildErrors, ()=>{
+        pendingItemsNum--;
+        if(pendingItemsNum <= 0) complete(buildErrors);
+      });
     }
   }
 }

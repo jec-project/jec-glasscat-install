@@ -8,47 +8,63 @@ const jec_cheetoh_1 = require("jec-cheetoh");
 class InstallDefaultGpmTask extends AbstractInstallTask_1.AbstractInstallTask {
     constructor() {
         super();
+        this._cursor = -1;
+        this._isRunning = false;
+        this._errors = null;
     }
-    installGpms(complete) {
-        let buildErrors = new Array();
-        let error = null;
+    installNextGpm(complete) {
         let builder = new jec_cheetoh_1.CheetohBuilder();
         let cheetoh = builder.build();
         let gpmList = this.__properties.defaultGpmList;
         let gpmRef = null;
         let name = null;
-        let len = gpmList.length;
-        let cursor = len;
+        let error = null;
         let currentPath = process.cwd();
-        while (len--) {
-            gpmRef = gpmList[len];
+        this._cursor--;
+        if (this._cursor >= 0) {
+            gpmRef = gpmList[this._cursor];
             name = gpmRef.name;
             cheetoh.installGpmFromUri(`https://registry.npmjs.org/${name}/-/${name}-${gpmRef.version}.tgz`, path.join(currentPath, "public/wildcat"), (err) => {
                 if (err) {
                     error = new InstallTaskError_1.InstallTaskError("An error occured while installing a default GPM", err);
-                    buildErrors.push(error);
+                    this._errors.push(error);
                 }
-                cursor--;
-                if (cursor <= 0)
-                    complete(buildErrors);
+                this.installNextGpm(complete);
             });
+        }
+        else {
+            this._cursor = -1;
+            let resultErrors = this._errors.splice(0);
+            this._errors = null;
+            this._isRunning = false;
+            complete(resultErrors);
         }
     }
     run(complete) {
-        let buildErrors = new Array();
-        let factory = new DefaultGpmPropsFactory_1.DefaultGpmPropsFactory();
-        try {
-            this.__properties = factory.create();
+        let factory = null;
+        if (this._isRunning) {
+            let errors = new Array();
+            let msg = "Process is already running";
+            let error = new InstallTaskError_1.InstallTaskError(msg, new Error(msg));
+            errors.push(error);
+            complete(errors);
         }
-        catch (e) {
-            buildErrors.push(e);
+        else {
+            this._isRunning = true;
+            this._errors = new Array();
+            factory = new DefaultGpmPropsFactory_1.DefaultGpmPropsFactory();
+            try {
+                this.__properties = factory.create();
+            }
+            catch (e) {
+                this._errors.push(e);
+            }
+            this._cursor = this.__properties.defaultGpmList.length;
+            this.installNextGpm(complete);
         }
-        this.installGpms((errs) => {
-            errs.forEach(element => {
-                buildErrors.push(element);
-            });
-            complete(buildErrors);
-        });
+    }
+    isRunning() {
+        return this._isRunning;
     }
 }
 exports.InstallDefaultGpmTask = InstallDefaultGpmTask;

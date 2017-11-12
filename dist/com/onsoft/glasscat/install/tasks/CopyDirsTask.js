@@ -15,7 +15,7 @@ class CopyDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
         let factory = new CopyDirsTaskPropsFactory_1.CopyDirsTaskPropsFactory();
         this.__properties = factory.create();
     }
-    copyFiles(item, rootPath, pendingItemsNum, buildErrors, complete) {
+    copyFiles(item, rootPath, buildErrors, complete) {
         let srcPath = rootPath + item.src;
         let destPath = rootPath + item.dest;
         let data = null;
@@ -31,8 +31,7 @@ class CopyDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
                     buildErrors.push(error);
                 }
             });
-            if (--pendingItemsNum === 0)
-                complete(buildErrors);
+            complete();
         });
     }
     run(complete) {
@@ -44,7 +43,11 @@ class CopyDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
         let pendingItemsNum = len;
         while (len--) {
             item = items[len];
-            this.copyFiles(item, rootPath, pendingItemsNum, buildErrors, complete);
+            this.copyFiles(item, rootPath, buildErrors, () => {
+                pendingItemsNum--;
+                if (pendingItemsNum <= 0)
+                    complete(buildErrors);
+            });
         }
     }
 }

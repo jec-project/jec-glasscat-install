@@ -17,6 +17,7 @@
 import {InstallTask} from "./core/InstallTask";
 import {InstallTaskError} from "./exceptions/InstallTaskError";
 import {InstallLogger} from "./logging/InstallLogger";
+import { LogLevel } from "jec-commons";
 
 /**
  * The object that is responsible for invoking GlassCat installation tasks.
@@ -43,6 +44,23 @@ export class InstallTaskRunner {
    */
   private _tasks:InstallTask[] = null;
 
+  /**
+   * The list of errors to pass as parameter of the callback method at the end
+   * of the tasks running process.
+   */
+  private _errors:InstallTaskError[] = null;
+  
+  /**
+   * The cursor that indicates the task currently run in this task runner.
+   */
+  private _cursor:number = -1;
+
+  /**
+   * A boollean that indicates whether this task runner is processing tasks
+   * (<code>true</code>), or not (<code>false</code>).
+   */
+  private _isRunning:boolean = false;
+
   //////////////////////////////////////////////////////////////////////////////
   // Private methods
   //////////////////////////////////////////////////////////////////////////////
@@ -55,28 +73,57 @@ export class InstallTaskRunner {
   }
 
   /**
+   * Invokes the next task in the tasks stack, depending on the current cursor
+   * position.
+   * 
+   * @param {Function} result the reference to the callback method invoked at 
+   *                          the end of the task process. 
+   */
+  private nextTask(result:(errors:InstallTaskError[])=>void):void {
+    let task:InstallTask = null;
+    let taskName:string = null;
+    this._cursor--;
+    if(this._cursor >= 0) {
+      task = this._tasks[this._cursor];
+      taskName = task.constructor.name;
+      InstallLogger.getInstance().log("running new task: " + taskName);
+      task.run((taskErrors:InstallTaskError[])=>{
+        if(taskErrors && taskErrors.length > 0) {
+          this._errors = this._errors.concat(taskErrors);
+        }
+        InstallLogger.getInstance().log("task complete: " + taskName);
+        this.nextTask(result);
+      });
+    } else {
+      this.runComplete(result);
+    }
+  }
+
+  /**
    * Invoke the callback method at the end of the task process.
    * 
    * @param {Function} result the callback method invoked at the end of the
    *                          task process. 
-   * @param {Array<InstallTaskError>} errorList the list of errors to pass as
-   *                                            parameter of the  callback
-   *                                            method.
    */
-  private runComplete(result:(errors:InstallTaskError[])=>void,
-                                            errorList:InstallTaskError[]):void {
-    let len:number = errorList.length;
+  private runComplete(result:(errors:InstallTaskError[])=>void):void {
+    let len:number = this._errors.length;
     let error:InstallTaskError = null;
+    let errorsResult:InstallTaskError[] = new Array<InstallTaskError>();
     let report:string = `running tasks complete:
 - number of tasks: ${this._tasks.length}
 - number of errors: ${len}`;
     while(len--) {
-      error = errorList[len];
+      error = this._errors[len];
+      errorsResult.push(error);
       report += "\n=> error: " + error.getMessage()
               + "\n   stack: " + error.getOriginalError();
     }
     InstallLogger.getInstance().log(report);
-    result(errorList);
+
+    this._cursor = -1;
+    this._isRunning = false;
+    this._errors = null;
+    result(errorsResult);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -116,28 +163,26 @@ export class InstallTaskRunner {
    *                          during the task process.
    */
   public runTasks(result:(errors:InstallTaskError[])=>void):void {
-    InstallLogger.getInstance().log("running tasks:")
-    let len:number = this._tasks.length;
-    let taskNum:number = len;
-    let task:InstallTask = null;
-    let errorList:InstallTaskError[] = new Array<InstallTaskError>();
-    let taskName:string = null;
-    if(len === 0) this.runComplete(result, errorList);
-    else {
-      while(len--) {
-        task = this._tasks[len];
-        taskName = task.constructor.name;
-        InstallLogger.getInstance().log("running new task: " + taskName);
-        task.run((taskErrors:InstallTaskError[])=>{
-          if(taskErrors && taskErrors.length > 0) {
-            errorList = errorList.concat(taskErrors);
-          }
-          InstallLogger.getInstance().log("task complete: " + taskName);
-          if(--taskNum === 0) {
-            this.runComplete(result, errorList);
-          }
-        });
-      }
+    if(this._isRunning) {
+      InstallLogger.getInstance()
+                   .log("Process is already running", LogLevel.ERROR);
+    } else {
+      this._isRunning = true;
+      InstallLogger.getInstance().log("running tasks:");
+      this._errors = new Array<InstallTaskError>();
+      this._cursor = this._tasks.length;
+      this.nextTask(result);
     }
+  }
+
+  /**
+   * Returns a boollean that indicates whether this task runner is processing 
+   * tasks (<code>true</code>), or not (<code>false</code>).
+   * 
+   * @return {boolean} <code>true</code> whether this task runner is processing
+   *                   tasks; <code>false</code> otherwise.
+   */
+  public isRunning():boolean {
+    return this._isRunning;
   }
 }
