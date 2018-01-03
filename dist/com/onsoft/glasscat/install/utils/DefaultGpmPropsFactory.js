@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const InstallDefaultGpmTaskProps_1 = require("./InstallDefaultGpmTaskProps");
-const jec_commons_1 = require("jec-commons");
+const jec_commons_node_1 = require("jec-commons-node");
 const path = require("path");
 const InstallTaskError_1 = require("../exceptions/InstallTaskError");
 const GpmRefParser_1 = require("./GpmRefParser");
@@ -10,7 +10,7 @@ class DefaultGpmPropsFactory {
         this._config = null;
     }
     loadConfig() {
-        let loader = new jec_commons_1.JsonLoader();
+        let loader = new jec_commons_node_1.DefaultJsonLoader();
         let defaultPath = path.join(process.cwd(), "src/resources/install/default-gpms.json");
         try {
             this._config = loader.loadSync(defaultPath);

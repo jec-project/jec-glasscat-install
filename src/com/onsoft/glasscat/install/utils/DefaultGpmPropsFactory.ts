@@ -17,6 +17,7 @@
 import {InstallDefaultGpmTaskProps} from "./InstallDefaultGpmTaskProps";
 import {GpmRef} from "./GpmRef";
 import {JsonLoader} from "jec-commons";
+import {DefaultJsonLoader} from "jec-commons-node";
 import * as path from "path";
 import {InstallTaskError} from "../exceptions/InstallTaskError";
 import {GpmRefParser} from "./GpmRefParser";
@@ -53,7 +54,7 @@ export class DefaultGpmPropsFactory {
    * Loads the default GPMs configuration file.
    */
   private loadConfig():void {
-    let loader:JsonLoader = new JsonLoader();
+    let loader:JsonLoader = new DefaultJsonLoader();
     let defaultPath:string = path.join(
       process.cwd(), "src/resources/install/default-gpms.json"
     );
