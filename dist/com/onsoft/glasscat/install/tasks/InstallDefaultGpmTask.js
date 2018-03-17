@@ -13,13 +13,13 @@ class InstallDefaultGpmTask extends AbstractInstallTask_1.AbstractInstallTask {
         this._errors = null;
     }
     installNextGpm(complete) {
-        let builder = new jec_cheetoh_1.CheetohBuilder();
-        let cheetoh = builder.build();
-        let gpmList = this.__properties.defaultGpmList;
+        const builder = new jec_cheetoh_1.CheetohBuilder();
+        const cheetoh = builder.build();
+        const gpmList = this.__properties.defaultGpmList;
+        const currentPath = process.cwd();
         let gpmRef = null;
         let name = null;
         let error = null;
-        let currentPath = process.cwd();
         this._cursor--;
         if (this._cursor >= 0) {
             gpmRef = gpmList[this._cursor];
@@ -34,7 +34,7 @@ class InstallDefaultGpmTask extends AbstractInstallTask_1.AbstractInstallTask {
         }
         else {
             this._cursor = -1;
-            let resultErrors = this._errors.splice(0);
+            const resultErrors = this._errors.splice(0);
             this._errors = null;
             this._isRunning = false;
             complete(resultErrors);
@@ -43,9 +43,9 @@ class InstallDefaultGpmTask extends AbstractInstallTask_1.AbstractInstallTask {
     run(complete) {
         let factory = null;
         if (this._isRunning) {
-            let errors = new Array();
-            let msg = "Process is already running";
-            let error = new InstallTaskError_1.InstallTaskError(msg, new Error(msg));
+            const errors = new Array();
+            const msg = "Process is already running";
+            const error = new InstallTaskError_1.InstallTaskError(msg, new Error(msg));
             errors.push(error);
             complete(errors);
         }

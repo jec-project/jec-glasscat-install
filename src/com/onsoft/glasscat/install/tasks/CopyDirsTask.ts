@@ -62,7 +62,7 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
    * Initializes this object.
    */
   private initObj():void {
-    let factory:CopyDirsTaskPropsFactory = new CopyDirsTaskPropsFactory();
+    const factory:CopyDirsTaskPropsFactory = new CopyDirsTaskPropsFactory();
     this.__properties = factory.create();
   }
 
@@ -79,8 +79,8 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
    */
   private copyFiles(item:CopyDirsItem, rootPath:string, 
                     buildErrors:InstallTaskError[], complete:Function):void {
-    let srcPath:string = rootPath + item.src;
-    let destPath:string = rootPath + item.dest;
+    const srcPath:string = rootPath + item.src;
+    const destPath:string = rootPath + item.dest;
     let data:string = null;
     let error:InstallTaskError = null;
     fs.readdir(srcPath, (err:NodeJS.ErrnoException, files:string[]) => {
@@ -108,9 +108,9 @@ export class CopyDirsTask extends AbstractInstallTask implements InstallTask {
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let rootPath:string = process.cwd();
-    let items:CopyDirsItem[] = this.__properties.items;
+    const buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
+    const rootPath:string = process.cwd();
+    const items:CopyDirsItem[] = this.__properties.items;
     let len:number = items.length;
     let item:CopyDirsItem = null;
     let pendingItemsNum:number = len;

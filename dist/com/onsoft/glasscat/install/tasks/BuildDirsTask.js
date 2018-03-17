@@ -13,8 +13,8 @@ class BuildDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
         this.__properties = new BuildDirsTaskProps_1.BuildDirsTaskProps();
     }
     run(complete) {
-        let buildErrors = new Array();
-        let directories = this.__properties.directories;
+        const buildErrors = new Array();
+        const directories = this.__properties.directories;
         let len = directories.length;
         let dir = null;
         let error = null;

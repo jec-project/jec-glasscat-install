@@ -4,7 +4,7 @@ const GpmRef_1 = require("./GpmRef");
 class GpmRefParser {
     constructor() { }
     parse(defaultGpm) {
-        let ref = new GpmRef_1.GpmRef();
+        const ref = new GpmRef_1.GpmRef();
         ref.name = defaultGpm.name;
         ref.version = defaultGpm.version;
         return ref;

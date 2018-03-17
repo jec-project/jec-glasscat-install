@@ -56,9 +56,9 @@ export class ConfigFilePathSolver {
    * The list of folders to create.
    */
   public extractFilePath(file:string):FilePath{
-    let props:FilePath = new FilePath();
-    let buffer:string[] = file.split(this.SEPARATOR);
-    let len:number = buffer.length - 2;
+    const props:FilePath = new FilePath();
+    const buffer:string[] = file.split(this.SEPARATOR);
+    const len:number = buffer.length - 2;
     let i:number = 0;
     let path:string = this.SLASH;
     for(; i <= len; ++i) {

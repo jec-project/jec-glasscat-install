@@ -13,14 +13,14 @@ class BuildConsoleTask extends AbstractInstallTask_1.AbstractInstallTask {
         this.__properties = new BuildConsoleTaskProps_1.BuildConsoleTaskProps();
     }
     run(complete) {
-        let buildErrors = new Array();
-        let error = null;
+        const buildErrors = new Array();
         let target = process.cwd() + this.__properties.projectPath;
-        let options = {
+        const options = {
             cwd: target,
             env: process.env,
             stdio: "inherit"
         };
+        let error = null;
         try {
             cp.execSync("npm install --only=production", options);
         }

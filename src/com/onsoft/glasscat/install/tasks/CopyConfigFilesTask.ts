@@ -75,9 +75,9 @@ export class CopyConfigFilesTask extends AbstractInstallTask
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let rootPath:string = process.cwd();
-    let srcPath:string = rootPath + this.__properties.src;
+    const buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
+    const rootPath:string = process.cwd();
+    const srcPath:string = rootPath + this.__properties.src;
     let filePath:FilePath = null;
     let data:string = null;
     let error:InstallTaskError = null;

@@ -42,7 +42,7 @@ export class GpmRefParser {
    * @return {GpmRef} a new <code>GpmRef</code> instance.
    */
   public parse(defaultGpm:any):GpmRef {
-    let ref:GpmRef = new GpmRef();
+    const ref:GpmRef = new GpmRef();
     ref.name = defaultGpm.name;
     ref.version = defaultGpm.version;
     return ref;

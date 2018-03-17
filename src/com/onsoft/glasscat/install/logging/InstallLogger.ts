@@ -58,7 +58,7 @@ export class InstallLogger extends AbstractLoggerProxy implements LoggerProxy {
     if(InstallLogger.INSTANCE === null) {
       InstallLogger._locked = false;
       InstallLogger.INSTANCE = new InstallLogger();
-      let logger:Logger = new ConsoleLogger();
+      const logger:Logger = new ConsoleLogger();
       InstallLogger.INSTANCE.setLogger(logger);
     }
     return InstallLogger.INSTANCE;

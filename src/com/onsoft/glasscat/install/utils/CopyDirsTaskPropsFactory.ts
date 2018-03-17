@@ -47,9 +47,9 @@ export class CopyDirsTaskPropsFactory {
    *                             GlassCat.
    */
   public create():CopyDirsTaskProps {
-    let builder:CopyDirsItemBuilder = new CopyDirsItemBuilder();
-    let props:CopyDirsTaskProps = new CopyDirsTaskProps();
-    let items = new Array<CopyDirsItem>();
+    const builder:CopyDirsItemBuilder = new CopyDirsItemBuilder();
+    const props:CopyDirsTaskProps = new CopyDirsTaskProps();
+    const items = new Array<CopyDirsItem>();
     items.push(
       builder.build("/src/resources/locales", "/public/locales")
     );

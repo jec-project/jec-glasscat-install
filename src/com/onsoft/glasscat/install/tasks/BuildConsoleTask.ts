@@ -60,14 +60,14 @@ export class BuildConsoleTask extends AbstractInstallTask
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let error:InstallTaskError = null;
+    const buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
     let target:string = process.cwd() + this.__properties.projectPath;
-    let options:any = {
+    const options:any = {
       cwd: target,
       env: process.env,
       stdio: "inherit"
     };
+    let error:InstallTaskError = null;
     //console.log(target)
     try {
       cp.execSync("npm install --only=production", options);

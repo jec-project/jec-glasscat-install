@@ -56,8 +56,8 @@ export class BuildDirsTask extends AbstractInstallTask implements InstallTask {
    * @inheritDoc
    */
   public run(complete:(errors:InstallTaskError[])=>void):void {
-    let buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
-    let directories:string[] = this.__properties.directories;
+    const buildErrors:InstallTaskError[] = new Array<InstallTaskError>();
+    const directories:string[] = this.__properties.directories;
     let len:number = directories.length;
     let dir:string = null;
     let error:InstallTaskError = null;

@@ -13,7 +13,7 @@ class InstallLogger extends jec_commons_1.AbstractLoggerProxy {
         if (InstallLogger.INSTANCE === null) {
             InstallLogger._locked = false;
             InstallLogger.INSTANCE = new InstallLogger();
-            let logger = new jec_commons_1.ConsoleLogger();
+            const logger = new jec_commons_1.ConsoleLogger();
             InstallLogger.INSTANCE.setLogger(logger);
         }
         return InstallLogger.INSTANCE;

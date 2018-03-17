@@ -17,9 +17,9 @@ class CopyConfigFilesTask extends AbstractInstallTask_1.AbstractInstallTask {
         this._solver = new ConfigFilePathSolver_1.ConfigFilePathSolver();
     }
     run(complete) {
-        let buildErrors = new Array();
-        let rootPath = process.cwd();
-        let srcPath = rootPath + this.__properties.src;
+        const buildErrors = new Array();
+        const rootPath = process.cwd();
+        const srcPath = rootPath + this.__properties.src;
         let filePath = null;
         let data = null;
         let error = null;

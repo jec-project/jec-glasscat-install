@@ -54,8 +54,8 @@ export class DefaultGpmPropsFactory {
    * Loads the default GPMs configuration file.
    */
   private loadConfig():void {
-    let loader:JsonLoader = new DefaultJsonLoader();
-    let defaultPath:string = path.join(
+    const loader:JsonLoader = new DefaultJsonLoader();
+    const defaultPath:string = path.join(
       process.cwd(), "src/resources/install/default-gpms.json"
     );
     try {
@@ -91,11 +91,11 @@ export class DefaultGpmPropsFactory {
    *                                      install GlassCat.
    */
   private parse():InstallDefaultGpmTaskProps {
-    let props:InstallDefaultGpmTaskProps = new InstallDefaultGpmTaskProps();
-    let parser:GpmRefParser = new GpmRefParser();
-    let defaultList:any[] = this._config.defaultGpmList;
+    const props:InstallDefaultGpmTaskProps = new InstallDefaultGpmTaskProps();
+    const parser:GpmRefParser = new GpmRefParser();
+    const defaultList:any[] = this._config.defaultGpmList;
+    const resultList:Array<GpmRef> = new Array<GpmRef>();
     let len:number = defaultList.length;
-    let resultList:Array<GpmRef> = new Array<GpmRef>();
     while(len--) {
       resultList.push(parser.parse(defaultList[len]));
     }

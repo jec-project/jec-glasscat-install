@@ -10,8 +10,8 @@ class DefaultGpmPropsFactory {
         this._config = null;
     }
     loadConfig() {
-        let loader = new jec_commons_node_1.DefaultJsonLoader();
-        let defaultPath = path.join(process.cwd(), "src/resources/install/default-gpms.json");
+        const loader = new jec_commons_node_1.DefaultJsonLoader();
+        const defaultPath = path.join(process.cwd(), "src/resources/install/default-gpms.json");
         try {
             this._config = loader.loadSync(defaultPath);
         }
@@ -28,11 +28,11 @@ class DefaultGpmPropsFactory {
         }
     }
     parse() {
-        let props = new InstallDefaultGpmTaskProps_1.InstallDefaultGpmTaskProps();
-        let parser = new GpmRefParser_1.GpmRefParser();
-        let defaultList = this._config.defaultGpmList;
+        const props = new InstallDefaultGpmTaskProps_1.InstallDefaultGpmTaskProps();
+        const parser = new GpmRefParser_1.GpmRefParser();
+        const defaultList = this._config.defaultGpmList;
+        const resultList = new Array();
         let len = defaultList.length;
-        let resultList = new Array();
         while (len--) {
             resultList.push(parser.parse(defaultList[len]));
         }

@@ -43,7 +43,7 @@ export class CopyDirsItemBuilder {
    * @return {CopyDirsItem} a new <code>CopyDirsItem</code> instance.
    */
   public build(src:string, dest:string):CopyDirsItem {
-    let item:CopyDirsItem = new CopyDirsItem();
+    const item:CopyDirsItem = new CopyDirsItem();
     item.src = src;
     item.dest = dest;
     return item;

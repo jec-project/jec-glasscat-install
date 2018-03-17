@@ -7,9 +7,9 @@ class ConfigFilePathSolver {
         this.SLASH = "/";
     }
     extractFilePath(file) {
-        let props = new FilePath_1.FilePath();
-        let buffer = file.split(this.SEPARATOR);
-        let len = buffer.length - 2;
+        const props = new FilePath_1.FilePath();
+        const buffer = file.split(this.SEPARATOR);
+        const len = buffer.length - 2;
         let i = 0;
         let path = this.SLASH;
         for (; i <= len; ++i) {

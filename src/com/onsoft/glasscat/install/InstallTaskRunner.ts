@@ -106,9 +106,9 @@ export class InstallTaskRunner {
    *                          task process. 
    */
   private runComplete(result:(errors:InstallTaskError[])=>void):void {
+    const errorsResult:InstallTaskError[] = new Array<InstallTaskError>();
     let len:number = this._errors.length;
     let error:InstallTaskError = null;
-    let errorsResult:InstallTaskError[] = new Array<InstallTaskError>();
     let report:string = `running tasks complete:
 - number of tasks: ${this._tasks.length}
 - number of errors: ${len}`;

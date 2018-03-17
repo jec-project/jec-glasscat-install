@@ -34,9 +34,9 @@ class InstallTaskRunner {
         }
     }
     runComplete(result) {
+        const errorsResult = new Array();
         let len = this._errors.length;
         let error = null;
-        let errorsResult = new Array();
         let report = `running tasks complete:
 - number of tasks: ${this._tasks.length}
 - number of errors: ${len}`;

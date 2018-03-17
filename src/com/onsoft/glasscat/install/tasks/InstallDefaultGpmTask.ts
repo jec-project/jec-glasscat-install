@@ -74,13 +74,13 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
    *                            installations are complete.
    */
   private installNextGpm(complete:(errors:InstallTaskError[])=>void):void {
-    let builder:CheetohBuilder = new CheetohBuilder();
-    let cheetoh:Cheetoh = builder.build();
-    let gpmList:GpmRef[] = this.__properties.defaultGpmList;
+    const builder:CheetohBuilder = new CheetohBuilder();
+    const cheetoh:Cheetoh = builder.build();
+    const gpmList:GpmRef[] = this.__properties.defaultGpmList;
+    const currentPath:string = process.cwd();
     let gpmRef:GpmRef = null;
     let name:string = null;
     let error:InstallTaskError = null;
-    let currentPath:string = process.cwd();
     this._cursor--;
     if(this._cursor >= 0) {
       gpmRef = gpmList[this._cursor];
@@ -101,7 +101,7 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
       );
     } else {
       this._cursor = -1;
-      let resultErrors:InstallTaskError[] = this._errors.splice(0);
+      const resultErrors:InstallTaskError[] = this._errors.splice(0);
       this._errors = null;
       this._isRunning = false;
       complete(resultErrors);
@@ -118,9 +118,9 @@ export class InstallDefaultGpmTask extends AbstractInstallTask
   public run(complete:(errors:InstallTaskError[])=>void):void {
     let factory:DefaultGpmPropsFactory = null;
     if(this._isRunning) {
-      let errors:Array<InstallTaskError> = new Array<InstallTaskError>();
-      let msg:string = "Process is already running";
-      let error = new InstallTaskError(msg, new Error(msg));
+      const errors:Array<InstallTaskError> = new Array<InstallTaskError>();
+      const msg:string = "Process is already running";
+      const error = new InstallTaskError(msg, new Error(msg));
       errors.push(error);
       complete(errors);
     } else {

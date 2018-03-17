@@ -12,12 +12,12 @@ class CopyDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
         this.initObj();
     }
     initObj() {
-        let factory = new CopyDirsTaskPropsFactory_1.CopyDirsTaskPropsFactory();
+        const factory = new CopyDirsTaskPropsFactory_1.CopyDirsTaskPropsFactory();
         this.__properties = factory.create();
     }
     copyFiles(item, rootPath, buildErrors, complete) {
-        let srcPath = rootPath + item.src;
-        let destPath = rootPath + item.dest;
+        const srcPath = rootPath + item.src;
+        const destPath = rootPath + item.dest;
         let data = null;
         let error = null;
         fs.readdir(srcPath, (err, files) => {
@@ -35,9 +35,9 @@ class CopyDirsTask extends AbstractInstallTask_1.AbstractInstallTask {
         });
     }
     run(complete) {
-        let buildErrors = new Array();
-        let rootPath = process.cwd();
-        let items = this.__properties.items;
+        const buildErrors = new Array();
+        const rootPath = process.cwd();
+        const items = this.__properties.items;
         let len = items.length;
         let item = null;
         let pendingItemsNum = len;
