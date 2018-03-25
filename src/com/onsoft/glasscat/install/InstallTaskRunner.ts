@@ -17,7 +17,7 @@
 import {InstallTask} from "./core/InstallTask";
 import {InstallTaskError} from "./exceptions/InstallTaskError";
 import {InstallLogger} from "./logging/InstallLogger";
-import { LogLevel } from "jec-commons";
+import {LogLevel} from "jec-commons";
 
 /**
  * The object that is responsible for invoking GlassCat installation tasks.

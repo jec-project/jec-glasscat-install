@@ -24,6 +24,7 @@ export {BuildConsoleTask} from "./install/tasks/BuildConsoleTask";
 export {BuildDirsTask} from "./install/tasks/BuildDirsTask";
 export {CopyConfigFilesTask} from "./install/tasks/CopyConfigFilesTask";
 export {CopyDirsTask} from "./install/tasks/CopyDirsTask";
+export {CreateMetadataTask} from "./install/tasks/CreateMetadataTask";
 export {InstallDefaultGpmTask} from "./install/tasks/InstallDefaultGpmTask";
 //--> com/onsoft/glasscat/install/utils
 export {BuildConsoleTaskProps} from "./install/utils/BuildConsoleTaskProps";

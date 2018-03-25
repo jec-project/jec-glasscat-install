@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.0.9"></a>
+## **1.0.9** (2018-03-25)
+
+### Bug Fixes
+
+### Features
+
+- Adding server metadata functionalities
+
 <a name="jec-glasscat-install-1.0.8"></a>
 ## **1.0.8** (2017-12-26)
 
