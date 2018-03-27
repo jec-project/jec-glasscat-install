@@ -20,6 +20,7 @@ import { SingletonError, LoggerProxy } from "jec-commons";
 import { CreateMetadataTask } from "../../../../../../src/com/onsoft/glasscat/install/tasks/CreateMetadataTask";
 import { InstallTaskError } from "../../../../../../src/com/onsoft/glasscat/install/exceptions/InstallTaskError";
 import * as fs from "fs";
+import * as path from "path";
 
 // utilities:
 import * as utils from "../../../../../../utils/test-utils/utilities/CreateMetadataTaskTestUtils";
@@ -57,10 +58,12 @@ export class CreateMetadataTaskTest {
     order: 1
   })
   public runTest(@Async done:Function):void {
-    utils.createTestFolders();
     this.task.setProperties({ path:utils.PATH } )
     this.task.run((errors:InstallTaskError[])=>{
-      expect(fs.existsSync(utils.PATH + "/metadata.json")).to.be.true;
+      expect(
+        fs.existsSync(
+          path.join(process.cwd() + utils.PATH + "/metadata.json"))
+        ).to.be.true;
       done();
     });
   }

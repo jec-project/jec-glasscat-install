@@ -21,10 +21,7 @@ import * as fse from "fs-extra";
  */
 
 // Utilities:
-export const PATH:string = process.cwd() + "/utils/.metadata";
+export const PATH:string = "/utils/metadata";
 export const deleteTestFolders:Function = function():void {
   fse.removeSync(PATH);
-};
-export const createTestFolders:Function = function():void {
-  fse.mkdirsSync(PATH);
 };

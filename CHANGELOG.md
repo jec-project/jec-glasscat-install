@@ -1,5 +1,14 @@
 # JEC GlassCat Install Project: Update Release Notes
 
+<a name="jec-glasscat-install-1.1.0"></a>
+## **1.1.0** (2018-03-27)
+
+### Bug Fixes
+
+- Adding missing `metadata` folder creation statement
+
+### Features
+
 <a name="jec-glasscat-install-1.0.9"></a>
 ## **1.0.9** (2018-03-25)
 

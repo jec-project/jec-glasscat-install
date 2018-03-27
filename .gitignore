@@ -61,3 +61,5 @@ test/**/*.js
 
 # Ignore JavaScript files in utils folder
 utils/**/*.js
+# Ignore test folder
+utils/metadata

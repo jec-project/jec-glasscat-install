@@ -58,7 +58,8 @@ export class CreateMetadataTask extends AbstractInstallTask
   /**
    * The path to the GlassCat server metadata file.
    */
-  private readonly METADATA_PATH:string = "/server/.metadata";
+  private readonly METADATA_PATH:string =
+                                         "/server/com/onsoft/glasscat/metadata";
   
   //////////////////////////////////////////////////////////////////////////////
   // Public methods
@@ -72,22 +73,42 @@ export class CreateMetadataTask extends AbstractInstallTask
     const generator:GlassCatMetadataGenerator =
                                      new GlassCatMetadataGenerator(PKG.version);
     const file:string = generator.generateFile();
-    const filePath:string = (this.__properties && this.__properties.path) ?
-                            path.join(this.__properties.path, this.FILE_NAME) :
-                            path.join(this.METADATA_PATH, this.FILE_NAME);
-    fs.writeFile(
-      filePath,
-      file,
-      this.ENCODING,
-      (err:NodeJS.ErrnoException | null) => {
-        if(err) {
-          const error:InstallTaskError = new InstallTaskError(
-            "An error occured while creating metadata", err
-          );
-          buildErrors.push(error);
+    const dirPath:string = (this.__properties && this.__properties.path) ?
+                            path.join(process.cwd(), this.__properties.path) :
+                            path.join(process.cwd(), this.METADATA_PATH);
+    const filePath:string = path.join(dirPath, this.FILE_NAME);
+    let error:InstallTaskError = null;
+    if(!fs.existsSync(dirPath)){
+      fs.mkdir(
+        dirPath,
+        (err:NodeJS.ErrnoException | null) => {
+          console.log(err)
+          if(err) {
+            error = new InstallTaskError(
+              "An error occured while creating metadata directory", err
+            );
+            buildErrors.push(error);
+            complete(buildErrors);
+          } else {
+            fs.writeFile(
+              filePath,
+              file,
+              this.ENCODING,
+              (err:NodeJS.ErrnoException | null) => {
+                if(err) {
+                  error = new InstallTaskError(
+                    "An error occured while creating metadata", err
+                  );
+                  buildErrors.push(error);
+                }
+                complete(buildErrors);
+              }
+            );
+          }
         }
-        complete(buildErrors);
-      }
-    );
+      );
+    } else {
+      complete(buildErrors);
+    }
   }
 }
