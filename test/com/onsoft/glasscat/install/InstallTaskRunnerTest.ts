@@ -16,8 +16,8 @@
 
 import { TestSuite, Test, BeforeAll, TestSorters, Async } from "jec-juta";
 import { LoggerProxy } from "jec-commons";
-import * as chai from "chai";
-import * as spies from "chai-spies";
+import { expect } from "chai";
+import * as sinon from "sinon";
 import { InstallTaskRunner } from "../../../../../src/com/onsoft/glasscat/install/InstallTaskRunner";
 import { InstallTaskError } from "../../../../../src/com/onsoft/glasscat/install/exceptions/InstallTaskError";
 import { InstallLogger } from "../../../../../src/com/onsoft/glasscat/install/logging/InstallLogger";
@@ -27,11 +27,6 @@ import { InstallTask } from "../../../../../src/com/onsoft/glasscat/install/core
 import { FakeTask1 } from "../../../../../utils/test-utils/classes/FakeTask1";
 import { FakeTask2 } from "../../../../../utils/test-utils/classes/FakeTask2";
 import { FailTask } from "../../../../../utils/test-utils/classes/FailTask";
-
-
-// Chai declarations:
-const expect:any = chai.expect;
-chai.use(spies);
 
 @TestSuite({
   description: "Test the InstallTaskRunner class methods",
@@ -75,10 +70,11 @@ export class InstallTaskRunnerTest {
     order: 2
   })
   public logStartTest():void {
-    let logger:LoggerProxy = InstallLogger.getInstance();
-    let spy:any = chai.spy.on(logger, "log");
+    const logger:LoggerProxy = InstallLogger.getInstance();
+    const spy:any = sinon.spy(logger, "log");
     this.runner.runTasks((errors:InstallTaskError[])=>{
-      expect(spy).to.have.been.called.with("running tasks:");
+      sinon.assert.calledWith(spy, "running tasks:");
+      sinon.restore();
     });
   }
   
@@ -87,9 +83,9 @@ export class InstallTaskRunnerTest {
     order: 3
   })
   public addTasksTest():void {
-    let tasks:InstallTask[] = [ this.task1, this.task2 ];
+    const tasks:InstallTask[] = [ this.task1, this.task2 ];
     this.runner.addTasks(tasks);
-    let result:InstallTask[] = this.runner.getTasks();
+    const result:InstallTask[] = this.runner.getTasks();
     expect(result[0]).to.equal(this.task2);
     expect(result[1]).to.equal(this.task1);
   }
@@ -110,11 +106,12 @@ export class InstallTaskRunnerTest {
     order: 5
   })
   public runTest(@Async done:Function):void {
-    let spy1:any = chai.spy.on(this.task1, "run");
-    let spy2:any = chai.spy.on(this.task2, "run");
+    const spy1:any = sinon.spy(this.task1, "run");
+    const spy2:any = sinon.spy(this.task2, "run");
     this.runner.runTasks((errors:InstallTaskError[])=>{
-      expect(spy1).to.have.been.called.once;
-      expect(spy2).to.have.been.called.once;
+      sinon.assert.calledOnce(spy1);
+      sinon.assert.calledOnce(spy2);
+      sinon.restore();
       done();
     });
   }
@@ -124,9 +121,9 @@ export class InstallTaskRunnerTest {
     order: 6
   })
   public addAdditionalTasksTest():void {
-    let tasks:InstallTask[] = [ this.errorTask ];
+    const tasks:InstallTask[] = [ this.errorTask ];
     this.runner.addTasks(tasks);
-    let result:InstallTask[] = this.runner.getTasks();
+    const result:InstallTask[] = this.runner.getTasks();
     expect(result).to.contain(this.errorTask);
     expect(result).to.contain(this.task1);
     expect(result).to.contain(this.task2);

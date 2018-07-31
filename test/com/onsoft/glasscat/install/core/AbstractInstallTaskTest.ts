@@ -55,7 +55,7 @@ export class AbstractInstallTaskTest {
     order: 2
   })
   public setPropertiesTest():void {
-    expect(this.impl.setProperties(this.props)).to.be.OK;
+    expect(this.impl.setProperties(this.props)).to.be.undefined;
   }
 
   @Test({
@@ -71,7 +71,7 @@ export class AbstractInstallTaskTest {
     order: 4
   })
   public runTest():void {
-    let doRun:Function = function():void {
+    const doRun:Function = function():void {
       this.impl.run(null);
     };
     expect(doRun).to.throw(Error);

@@ -28,7 +28,7 @@ export class InstallLoggerTest {
     description: "should throw a singleton error when calling the constructor function"
   })
   public singletonErrorTest():void {
-    let buildInstance:Function = function():void {
+    const buildInstance:Function = function():void {
       new InstallLogger();
     };
     expect(buildInstance).to.throw(SingletonError);
@@ -38,7 +38,7 @@ export class InstallLoggerTest {
     description: "should return an InstallLogger instance"
   })
   public getOriginalErrorTest():void {
-    let logger:LoggerProxy = InstallLogger.getInstance();
+    const logger:LoggerProxy = InstallLogger.getInstance();
     expect(logger).to.be.an.instanceOf(InstallLogger);
   }
     
@@ -46,8 +46,8 @@ export class InstallLoggerTest {
     description: "should return a singleton reference"
   })
   public singletonTest():void {
-    let logger1:LoggerProxy = InstallLogger.getInstance();
-    let logger2:LoggerProxy = InstallLogger.getInstance();
+    const logger1:LoggerProxy = InstallLogger.getInstance();
+    const logger2:LoggerProxy = InstallLogger.getInstance();
     expect(logger1).to.equal(logger2);
   }
 }

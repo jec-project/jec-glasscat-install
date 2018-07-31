@@ -49,7 +49,7 @@ export class CopyDirsItemBuilderTest {
     order: 1
   })
   public srcTest():void {
-    let item:CopyDirsItem = this.builder.build(this.SRC, this.DEST);
+    const item:CopyDirsItem = this.builder.build(this.SRC, this.DEST);
     expect(item.src).to.equal(this.SRC);
   }
   
@@ -58,7 +58,7 @@ export class CopyDirsItemBuilderTest {
     order: 2
   })
   public destTest():void {
-    let item:CopyDirsItem = this.builder.build(this.SRC, this.DEST);
+    const item:CopyDirsItem = this.builder.build(this.SRC, this.DEST);
     expect(item.dest).to.equal(this.DEST);
   }
 }

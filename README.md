@@ -1,5 +1,10 @@
 # JEC GlassCat Install Project
 
+[![JEC version](https://img.shields.io/badge/JEC-1.0-%23ba00ff.svg)](http://jecproject.org)
+[![GlassCat version](https://img.shields.io/badge/GlassCat-1.0-%230a50ff.svg)](http://jecproject.org)
+[![npm version](https://badge.fury.io/js/jec-install.svg)](https://www.npmjs.com/package/jec-install)
+[![Apache 2.0](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 The GlassCat Install Project contains the install utilities for the GlassCat Aplication Server.
 
 [![][jec-logo]][jec-url]
@@ -43,7 +48,7 @@ The documentation generator is [TypeDoc](http://typedoc.org/)
 
 ## Update Release Notes
 
-**Current stable release:** [1.0.9](CHANGELOG.md#jec-glasscat-install-1.0.9)
+**Current stable release:** [1.1.3](CHANGELOG.md#jec-glasscat-install-1.1.3)
  
 For a complete listing of release notes for all JEC GlassCat Install update releases, see the [CHANGELOG](CHANGELOG.md) file. 
 

@@ -59,7 +59,7 @@ export class CopyDirsTaskPropsFactoryTest {
     order: 2
   })
   public itemsDefaultTypeTest():void {
-    let items:Array<any> = this.props.create().items;
+    const items:Array<any> = this.props.create().items;
     expect(items[0]).to.be.an.instanceOf(CopyDirsItem);
     expect(items[1]).to.be.an.instanceOf(CopyDirsItem);
   }
@@ -69,7 +69,7 @@ export class CopyDirsTaskPropsFactoryTest {
     order: 2
   })
   public itemsDefaultTest():void {
-    let items:Array<CopyDirsItem> = this.props.create().items;
+    const items:Array<CopyDirsItem> = this.props.create().items;
     let item:CopyDirsItem = items[0];
     expect(item.dest).to.equal(utils.ITEM_1.dest);
     expect(item.src).to.equal(utils.ITEM_1.src);

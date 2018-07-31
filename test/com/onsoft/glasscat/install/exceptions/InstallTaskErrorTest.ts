@@ -27,9 +27,9 @@ export class InstallTaskErrorTest {
     description: "should return the same message as passed to the constructor function"
   })
   public getMessageTest():void {
-    let message:string = "foo bar";
-    let originalError:any = null;
-    let error:InstallTaskError = new InstallTaskError(message, originalError);
+    const message:string = "foo bar";
+    const originalError:any = null;
+    const error:InstallTaskError = new InstallTaskError(message, originalError);
     expect(error.getMessage()).to.equal(message);
   }
   
@@ -37,9 +37,9 @@ export class InstallTaskErrorTest {
     description: "should return the same excption as passed to the constructor function"
   })
   public getOriginalErrorTest():void {
-    let message:string = "foo bar";
-    let originalError:any = new Error();
-    let error:InstallTaskError = new InstallTaskError(message, originalError);
+    const message:string = "foo bar";
+    const originalError:any = new Error();
+    const error:InstallTaskError = new InstallTaskError(message, originalError);
     expect(error.getOriginalError()).to.equal(originalError);
   }
 }

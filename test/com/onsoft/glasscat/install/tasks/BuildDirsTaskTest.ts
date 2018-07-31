@@ -58,7 +58,7 @@ export class BuildDirsTaskTest {
     order: 1
   })
   public getPropertiesDefaultTest():void {
-    let props:any = this.task.getProperties();
+    const props:any = this.task.getProperties();
     expect(props.directories).to.be.an("array");
   }
   
@@ -68,7 +68,7 @@ export class BuildDirsTaskTest {
   })
   public directoryListTest():void {
     let dirs:string[] = this.task.getProperties().directories;
-    let dirsString:string = dirs.join();
+    const dirsString:string = dirs.join();
     dirs = utils.DIRECTORIES;
     let len:number = dirs.length;
     let dir:string = null;
@@ -83,14 +83,14 @@ export class BuildDirsTaskTest {
     order: 3
   })
   public setPropertiesTest():void {
-    let newProps:any = {
+    const newProps:any = {
       directories: utils.NEW_DIRECTORIES
     };
-    let doAddProps:Function = function():boolean {
+    const doAddProps:Function = function():boolean {
       this.task.setProperties(newProps);
       return true;
     };
-    expect(doAddProps.apply(this)).to.be.ok;
+    expect(doAddProps.apply(this)).to.be.true;
   }
   
   @Test({

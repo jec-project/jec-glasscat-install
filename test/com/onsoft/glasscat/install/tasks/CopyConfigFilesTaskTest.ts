@@ -60,7 +60,7 @@ export class CopyConfigFilesTaskTest {
     order: 1
   })
   public getPropertiesDefaultTest():void {
-    let props:any = this.task.getProperties();
+    const props:any = this.task.getProperties();
     expect(props.src).to.be.a("string");
   }
    
@@ -69,7 +69,7 @@ export class CopyConfigFilesTaskTest {
     order: 2
   })
   public srcTest():void {
-    let props:any = this.task.getProperties();
+    const props:any = this.task.getProperties();
     expect(props.src).to.equal(utils.SRC);
   }
   
@@ -78,14 +78,14 @@ export class CopyConfigFilesTaskTest {
     order: 3
   })
   public setPropertiesTest():void {
-    let newProps:any = {
+    const newProps:any = {
       src: utils.NEW_SRC
     };
-    let doAddProps:Function = function():boolean {
+    const doAddProps:Function = function():boolean {
       this.task.setProperties(newProps);
       return true;
     };
-    expect(doAddProps.apply(this)).to.be.ok;
+    expect(doAddProps.apply(this)).to.be.true;
   }
   
   @Test({
