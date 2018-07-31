@@ -2,7 +2,7 @@
 
 [![JEC version](https://img.shields.io/badge/JEC-1.0-%23ba00ff.svg)](http://jecproject.org)
 [![GlassCat version](https://img.shields.io/badge/GlassCat-1.0-%230a50ff.svg)](http://jecproject.org)
-[![npm version](https://badge.fury.io/js/jec-install.svg)](https://www.npmjs.com/package/jec-install)
+[![npm version](https://badge.fury.io/js/jec-glasscat-install.svg)](https://www.npmjs.com/package/jec-glasscat-install)
 [![Apache 2.0](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 The GlassCat Install Project contains the install utilities for the GlassCat Aplication Server.
